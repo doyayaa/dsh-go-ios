@@ -16,9 +16,10 @@ import UserNotifications
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
     // iOS 移植版的自定义插件（docs/ios-port-notes.md）。
-    DshAppPlugin.register(with: engineBridge.pluginRegistry)
-    DshNotifyPlugin.register(with: engineBridge.pluginRegistry)
-    DshMediaPlugin.register(with: engineBridge.pluginRegistry)
-    DshDiagnosticsPlugin.register(with: engineBridge.pluginRegistry)
+    let registry = engineBridge.pluginRegistry
+    DshAppPlugin.register(with: registry.registrar(forPlugin: "DshAppPlugin"))
+    DshNotifyPlugin.register(with: registry.registrar(forPlugin: "DshNotifyPlugin"))
+    DshMediaPlugin.register(with: registry.registrar(forPlugin: "DshMediaPlugin"))
+    DshDiagnosticsPlugin.register(with: registry.registrar(forPlugin: "DshDiagnosticsPlugin"))
   }
 }

@@ -108,7 +108,7 @@ final class DshNotifyPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     case "cancelGroup":
       guard let args = call.arguments as? [String: Any], let group = args["group"] as? String
       else { result(nil); return }
-      removeMatching { ($0.request.content.userInfo["group"] as? String) == group }
+      removeMatching { ($0["group"] as? String) == group }
       result(nil)
     case "cancelAll":
       let center = UNUserNotificationCenter.current()
@@ -292,8 +292,8 @@ final class DshMediaPlugin: NSObject, FlutterPlugin {
           let request = PHAssetCreationRequest.forAsset()
           let options = PHAssetResourceCreationOptions()
           options.originalFilename = name
+          options.uniformTypeIdentifier = utType.identifier
           request.addResource(with: .photo, data: data, options: options)
-          request.uniformTypeIdentifier = utType.identifier
         } completionHandler: { ok, _ in
           DispatchQueue.main.async { result(ok ? "\(displayFolder)/\(name)" : nil) }
         }
