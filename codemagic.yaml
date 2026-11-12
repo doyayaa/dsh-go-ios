@@ -20,7 +20,6 @@ workflows:
       branch_patterns:
         - pattern: ios-port
           include: true
-      cancel_previous: true
 
     scripts:
       - name: Show toolchain
