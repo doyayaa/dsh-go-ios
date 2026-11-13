@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../platform_caps.dart';
 import '../state/settings_state.dart';
 import '../state/read_list_epoch.dart';
 import 'runtime_bridge.dart';
@@ -58,6 +59,9 @@ class LocalRuntimeController extends Notifier<LocalRuntimeState> {
 
   @override
   LocalRuntimeState build() {
+    if (isIosPort) {
+      return const LocalRuntimeState(status: RuntimeStatus.unknown(), loaded: true);
+    }
     // Keep collecting before the log screen opens, without watching its updates.
     ref.read(localRuntimeLogsProvider);
     _sub = _bridge.events.listen(_onEvent, onError: (_) {});
@@ -91,12 +95,14 @@ class LocalRuntimeController extends Notifier<LocalRuntimeState> {
   }
 
   Future<void> install() {
+    if (isIosPort) return Future.value();
     ref.read(readListCredentialEpochProvider.notifier).advance();
     return _bridge.install();
   }
 
   /// Installs without what a reset kept but could not put back.
   Future<void> installDroppingKept() {
+    if (isIosPort) return Future.value();
     ref.read(readListCredentialEpochProvider.notifier).advance();
     return _bridge.install(dropKept: true);
   }
@@ -105,17 +111,19 @@ class LocalRuntimeController extends Notifier<LocalRuntimeState> {
   /// after connecting (see connection_state.dart), so it can change without a restart.
   /// Keeps the current mode: in safe mode this starts safe mode again.
   Future<void> start() {
+    if (isIosPort) return Future.value();
     final settings = ref.read(settingsProvider);
     return _bridge.start(phoneStorage: settings.phoneStorage, visualReplies: settings.visualReplies);
   }
 
   /// Starts in [mode]; [EngineMode.normal] from safe mode begins the two-minute trial.
   Future<void> startIn(EngineMode mode) {
+    if (isIosPort) return Future.value();
     final settings = ref.read(settingsProvider);
     return _bridge.start(phoneStorage: settings.phoneStorage, visualReplies: settings.visualReplies, mode: mode);
   }
 
-  Future<void> stop() => _bridge.stop();
+  Future<void> stop() => isIosPort ? Future.value() : _bridge.stop();
 
   Future<void> reset() => resetKeeping(const ResetKeep());
 
