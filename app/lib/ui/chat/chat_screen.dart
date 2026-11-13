@@ -1609,7 +1609,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
           resizeToAvoidBottomInset: true,
           // The pet stands over the page on the capsules above the
           // composer (they report themselves with PetPerch).
-          body: NativeComposerScope(
+          body: Listener(
+            onPointerMove: (e) {
+              if (e.delta.dy > 6) FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: NativeComposerScope(
             host: _nativeHost,
             ref: ref,
             child: PetStage(
@@ -2031,6 +2035,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> with WidgetsBindingObse
           ),
         ),
       ),
+    ),
     );
     return UiTrace(scope: 'chat', child: screen);
   }
