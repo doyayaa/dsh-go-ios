@@ -48,7 +48,10 @@ workflows:
           cp -R "$APP" Payload/
           zip -qry DSH-Go-iOS-unsigned.ipa Payload
           rm -rf Payload
+          echo "=== ipa location ==="
+          pwd
+          find . -name "*.ipa" -type f
           ls -lh DSH-Go-iOS-unsigned.ipa
 
     artifacts:
-      - app/DSH-Go-iOS-unsigned.ipa
+      - "**/*.ipa"
