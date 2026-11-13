@@ -971,8 +971,8 @@ class IdentityBar extends ConsumerWidget {
                 const SizedBox(width: 6),
                 IconButton(
                   key: const ValueKey('identity-host-details'),
-                  tooltip: host.isLocal ? l10n.phoneEngineTitle : l10n.remoteNetworkDetails,
-                  onPressed: host.isLocal ? onLocalDetails : () => showRemoteNetworkDetails(context, host),
+                  tooltip: (host.isLocal && !isIosPort) ? l10n.phoneEngineTitle : l10n.remoteNetworkDetails,
+                  onPressed: (host.isLocal && !isIosPort) ? onLocalDetails : () => showRemoteNetworkDetails(context, host),
                   padding: const EdgeInsets.all(4),
                   constraints: const BoxConstraints.tightFor(width: keySize, height: keySize),
                   style: IconButton.styleFrom(tapTargetSize: MaterialTapTargetSize.shrinkWrap),

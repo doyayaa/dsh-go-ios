@@ -35,6 +35,9 @@
 	<!-- dsh/media saveImage：保存引擎生成的图片到相册（仅添加，不读取）。 -->
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>DSH 需要此权限把对话里保存的图片写入相册。</string>
+	<!-- image_picker：从相册选择图片作为对话附件。 -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>DSH 需要访问相册以选择图片作为对话附件。</string>
 	<!-- 语音输入与 WebRTC 语音（后续版本）。 -->
 	<key>NSMicrophoneUsageDescription</key>
 	<string>DSH 需要麦克风进行语音输入与远程语音对话。</string>
