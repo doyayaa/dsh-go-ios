@@ -51,5 +51,4 @@ workflows:
           ls -lh DSH-Go-iOS-unsigned.ipa
 
     artifacts:
-      - app/build/ios/iphoneos/DSH-Go-iOS-unsigned.ipa
-      - build/ios/iphoneos/DSH-Go-iOS-unsigned.ipa
+      - app/DSH-Go-iOS-unsigned.ipa
